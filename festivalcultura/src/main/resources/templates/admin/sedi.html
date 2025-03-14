@@ -4,51 +4,70 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestione Sedi</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <h1>Gestione Sedi</h1>
+<body class="bg-gray-100 text-gray-800">
 
+    <div class="container mx-auto p-8">
 
+        <h1 class="text-3xl font-semibold text-center mb-8">Gestione Sedi</h1>
 
-    <!-- Tabella con tutte le sedi -->
-    <h2>Lista Sedi</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Nome Sede</th>
-                <th>Indirizzo</th>
-                <th>Azioni</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="sede : ${sedi}">
-                <td th:text="${sede.nome}"></td>
-                <td th:text="${sede.indirizzo}"></td>
-                <td>
-                    <!-- Bottone per eliminare una sede -->
-                    <form th:action="@{/admin/sedi/elimina/{id}(id=${sede.id})}" method="post">
-                        <button type="submit">Elimina</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        <h2 class="text-2xl font-medium mb-4">Lista Sedi</h2>
 
-    <h3>Aggiungi Nuova Sede</h3>
-    <form th:action="@{/admin/sedi}" method="post">
-        <label for="nome">Nome Sede:</label>
-        <input type="text" id="nome" name="nome" required><br><br>
+        <!-- Table with all venues -->
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="py-2 px-4 text-left font-semibold">Nome Sede</th>
+                    <th class="py-2 px-4 text-left font-semibold">Indirizzo</th>
+                    <th class="py-2 px-4 text-left font-semibold">Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="sede : ${sedi}">
+                    <td class="py-2 px-4" th:text="${sede.nome}"></td>
+                    <td class="py-2 px-4" th:text="${sede.indirizzo}"></td>
+                    <td class="py-2 px-4">
+                        <!-- Button to delete a venue -->
+                        <form th:action="@{/admin/sedi/elimina/{id}(id=${sede.id})}" method="post">
+                            <button type="submit" class="bg-red-500 text-white py-1 px-4 rounded-lg hover:bg-red-600 focus:outline-none">
+                                Elimina
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-        <label for="indirizzo">Indirizzo:</label>
-        <input type="text" id="indirizzo" name="indirizzo" required><br><br>
+        <h3 class="text-xl font-medium mt-8 mb-4">Aggiungi Nuova Sede</h3>
 
-        <button type="submit">Aggiungi Sede</button>
-    </form>
-    <!-- Bottone per tornare alla lista eventi o ad altre sezioni -->
-    <a href="/admin/eventi">
-        <button>Torna alla Lista Eventi</button>
-    </a>
+        <!-- Form to add a new venue -->
+        <form th:action="@{/admin/sedi}" method="post" class="bg-white p-6 rounded-lg shadow-md">
+            <label for="nome" class="block text-sm font-medium text-gray-700">Nome Sede:</label>
+            <input type="text" id="nome" name="nome" class="w-full p-2 border border-gray-300 rounded-lg mb-4" required><br>
+
+            <label for="indirizzo" class="block text-sm font-medium text-gray-700">Indirizzo:</label>
+            <input type="text" id="indirizzo" name="indirizzo" class="w-full p-2 border border-gray-300 rounded-lg mb-4" required><br>
+
+            <button type="submit" class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 focus:outline-none">
+                Aggiungi Sede
+            </button>
+        </form>
+
+        <!-- Button to return to the event list or other sections -->
+        <div class="mt-8 text-center">
+            <a href="/admin/eventi">
+                <button class="bg-gray-500 text-white py-2 px-6 rounded-lg hover:bg-gray-600 focus:outline-none">
+                    Torna alla Lista Eventi
+                </button>
+            </a>
+        </div>
+
+    </div>
+
 </body>
 
 </html>

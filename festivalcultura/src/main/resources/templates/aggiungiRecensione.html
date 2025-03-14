@@ -4,20 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Lascia una recensione</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <h1>Lascia una recensione per l'evento: <span th:text="${evento.titolo}"></span></h1>
+<body class="bg-gray-100">
 
-    <form th:action="@{/recensioni/aggiungi/{eventoId}(eventoId=${evento.id})}" method="post">
-        <label for="valutazione">Valutazione:</label>
-        <input type="number" name="valutazione" min="1" max="5" required>
+    <div class="container mx-auto px-4 py-8">
 
-        <label for="commento">Commento:</label>
-        <textarea name="commento" rows="4" required></textarea>
+        <h1 class="text-3xl font-semibold text-center text-gray-800 mb-6">
+            Lascia una recensione per l'evento: 
+            <span th:text="${evento.titolo}" class="text-blue-500"></span>
+        </h1>
 
-        <button type="submit">Invia recensione</button>
-    </form>
+        <!-- Review form -->
+        <form th:action="@{/recensioni/aggiungi/{eventoId}(eventoId=${evento.id})}" method="post" class="bg-white shadow-lg rounded-lg p-8">
+
+            <!-- Rating Input -->
+            <div class="mb-4">
+                <label for="valutazione" class="block text-lg font-medium text-gray-700 mb-2">Valutazione:</label>
+                <input type="number" name="valutazione" min="1" max="5" required class="w-full p-2 border border-gray-300 rounded-lg" placeholder="Valutazione (1-5)">
+            </div>
+
+            <!-- Comment Input -->
+            <div class="mb-6">
+                <label for="commento" class="block text-lg font-medium text-gray-700 mb-2">Commento:</label>
+                <textarea name="commento" rows="4" required class="w-full p-2 border border-gray-300 rounded-lg" placeholder="Lascia un commento..."></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">Invia recensione</button>
+
+        </form>
+
+    </div>
+
 </body>
 
 </html>

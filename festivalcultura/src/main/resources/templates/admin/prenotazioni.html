@@ -1,43 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Gestione Prenotazioni</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Gestione Prenotazioni</h1>
 
-    
+<body class="bg-gray-100 text-gray-800">
 
-    <h2>Lista Prenotazioni</h2>
+    <div class="container mx-auto p-8">
 
-    <!-- Tabella con tutte le prenotazioni -->
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Data Prenotazione</th>
-                <th>Numero Biglietti</th>
-                <th>Utente</th>
-                <th>Evento</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="prenotazione : ${prenotazioni}">
-                <td th:text="${prenotazione.id}"></td>
-                <td th:text="${prenotazione.dataPrenotazione}"></td>
-                <td th:text="${prenotazione.numeroBiglietti}"></td>
-                <td th:text="${prenotazione.utente.nome}"></td>
-                <td th:text="${prenotazione.evento.titolo}"></td>
-            </tr>
-        </tbody>
-    </table>
+        <h1 class="text-3xl font-semibold text-center mb-8">Gestione Prenotazioni</h1>
 
-    <br>
-    <!-- Bottone per tornare alla lista eventi o ad altre sezioni -->
-    <a href="/admin/eventi">
-        <button>Torna alla Lista Eventi</button>
-    </a>
+        <h2 class="text-2xl font-medium mb-4">Lista Prenotazioni</h2>
+
+        <!-- Table to display all reservations -->
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="py-2 px-4 text-left font-semibold">ID</th>
+                    <th class="py-2 px-4 text-left font-semibold">Data Prenotazione</th>
+                    <th class="py-2 px-4 text-left font-semibold">Numero Biglietti</th>
+                    <th class="py-2 px-4 text-left font-semibold">Utente</th>
+                    <th class="py-2 px-4 text-left font-semibold">Evento</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="prenotazione : ${prenotazioni}">
+                    <td class="py-2 px-4" th:text="${prenotazione.id}"></td>
+                    <td class="py-2 px-4" th:text="${prenotazione.dataPrenotazione}"></td>
+                    <td class="py-2 px-4" th:text="${prenotazione.numeroBiglietti}"></td>
+                    <td class="py-2 px-4" th:text="${prenotazione.utente.nome}"></td>
+                    <td class="py-2 px-4" th:text="${prenotazione.evento.titolo}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="mt-8 text-center">
+            <!-- Button to return to event list -->
+            <a href="/admin/eventi">
+                <button class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 focus:outline-none">
+                    Torna alla Lista Eventi
+                </button>
+            </a>
+        </div>
+
+    </div>
 
 </body>
+
 </html>

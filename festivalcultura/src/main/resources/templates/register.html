@@ -4,30 +4,58 @@
 <head>
     <title>Registrazione</title>
     <meta charset="UTF-8">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <div style="text-align: center;">
+<body class="bg-gray-100 h-screen flex items-center justify-center">
 
-        <h1>Registrazione Utente</h1>
-        <!-- Il form invia i dati a /auth/register -->
-        <form th:action="@{/auth/register}" method="post" th:object="${utente}">
-            <label>nome:</label>
-            <input type="text" th:field="*{nome}" required />
-            <br />
-            <label>email:</label>
-            <input type="text" th:field="*{email}" required />
-            <br />
-            <label>Password:</label>
-            <input type="password" th:field="*{password}" required />
-            <br />
-            <button type="submit">Registrati</button>
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full">
+        <h1 class="text-3xl font-semibold text-center text-gray-800 mb-6">Registrazione Utente</h1>
+
+        <!-- Registration Form -->
+        <form th:action="@{/auth/register}" method="post" th:object="${utente}" class="space-y-6">
+            <!-- Name -->
+            <div>
+                <label for="nome" class="block text-sm font-medium text-gray-700">Nome</label>
+                <input type="text" th:field="*{nome}" required 
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="text" th:field="*{email}" required 
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" th:field="*{password}" required 
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+                <button type="submit" 
+                    class="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Registrati
+                </button>
+            </div>
         </form>
-        <p>Hai già un account? <a th:href="@{/auth/login}">Accedi</a></p>
-        <br><br>
-        <p>Vai alla home <a th:href="@{/eventi}">Home</a></p>
 
+        <!-- Login Link -->
+        <p class="text-center text-sm mt-4 text-gray-600">Hai già un account? 
+            <a th:href="@{/auth/login}" class="text-blue-600 hover:text-blue-800">Accedi</a>
+        </p>
+
+        <!-- Home Link -->
+        <p class="text-center text-sm mt-4 text-gray-600">Vai alla home
+            <a th:href="@{/eventi}" class="text-blue-600 hover:text-blue-800">Home</a>
+        </p>
     </div>
+
 </body>
 
 </html>

@@ -4,55 +4,76 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestione Artisti</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <h1>Gestione Artisti</h1>
+<body class="bg-gray-100 text-gray-800">
 
-    <!-- Mostra un messaggio di errore se presente -->
-    <div th:if="${errore}">
-        <p style="color: red;" th:text="${errore}"></p>
+    <div class="container mx-auto p-8">
+
+        <h1 class="text-3xl font-semibold text-center mb-8">Gestione Artisti</h1>
+
+        <!-- Display error message if present -->
+        <div th:if="${errore}" class="text-red-500 text-center mb-6">
+            <p th:text="${errore}"></p>
+        </div>
+
+        <!-- List of artists -->
+        <h2 class="text-2xl font-semibold mb-4">Lista Artisti</h2>
+        <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md mb-8">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Nome Artista</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Genere</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="artista : ${artisti}">
+                    <td class="px-6 py-4 text-sm text-gray-800" th:text="${artista.nome}"></td>
+                    <td class="px-6 py-4 text-sm text-gray-800" th:text="${artista.genere}"></td>
+                    <td class="px-6 py-4">
+                        <!-- Delete button with confirmation -->
+                        <form th:action="@{/admin/artisti/elimina/{id}(id=${artista.id})}" method="post" class="inline">
+                            <button type="submit"
+                                class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 focus:outline-none">Elimina</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Add New Artist Section -->
+        <h3 class="text-xl font-semibold mb-4">Aggiungi Nuovo Artista</h3>
+        <form th:action="@{/admin/artisti}" method="post" class="bg-white p-6 rounded-lg shadow-md space-y-4">
+            <div>
+                <label for="nome" class="block text-gray-700">Nome Artista:</label>
+                <input type="text" id="nome" name="nome" required class="w-full p-2 border border-gray-300 rounded-lg">
+            </div>
+            <div>
+                <label for="genere" class="block text-gray-700">Genere:</label>
+                <input type="text" id="genere" name="genere" required
+                    class="w-full p-2 border border-gray-300 rounded-lg">
+            </div>
+            <div class="text-center">
+                <button type="submit"
+                    class="bg-teal-500 text-white py-2 px-6 rounded-lg hover:bg-teal-600 focus:outline-none">Aggiungi
+                    Artista</button>
+            </div>
+        </form>
+
+        <!-- Back to Event List -->
+        <div class="text-center mt-8">
+            <a href="/admin/eventi"
+                class="inline-block py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none">
+                Torna alla Lista Eventi
+            </a>
+        </div>
+
     </div>
 
-    <!-- Tabella con tutti gli artisti -->
-    <h2>Lista Artisti</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Nome Artista</th>
-                <th>Genere</th>
-                <th>Azioni</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="artista : ${artisti}">
-                <td th:text="${artista.nome}"></td>
-                <td th:text="${artista.genere}"></td>
-                <td>
-                    <!-- Bottone per eliminare un artista -->
-                    <form th:action="@{/admin/artisti/elimina/{id}(id=${artista.id})}" method="post">
-                        <button type="submit">Elimina</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h3>Aggiungi Nuovo Artista</h3>
-    <form th:action="@{/admin/artisti}" method="post">
-        <label for="nome">Nome Artista:</label>
-        <input type="text" id="nome" name="nome" required><br><br>
-
-        <label for="genere">Genere:</label>
-        <input type="text" id="genere" name="genere" required><br><br>
-
-        <button type="submit">Aggiungi Artista</button>
-    </form>
-
-    <!-- Bottone per tornare alla lista eventi o ad altre sezioni -->
-    <a href="/admin/eventi">
-        <button>Torna alla Lista Eventi</button>
-    </a>
 </body>
 
 </html>

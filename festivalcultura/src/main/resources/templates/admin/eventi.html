@@ -14,74 +14,83 @@
             }
         }
     </script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <h1>Gestione Eventi</h1>  
+<body class="bg-gray-100 text-gray-800">
 
-    <!-- Bottone per la gestione delle sedi -->
-    <a href="/admin/sedi">
-        <button>Gestisci Sedi</button>
-    </a>
-    <br> <br>
+    <div class="container mx-auto p-8">
 
-    <!-- Bottone per la gestione degli artisti -->
-    <a href="/admin/artisti">
-        <button>Gestisci Artisti</button>
-    </a>
-    <br> <br>
+        <h1 class="text-3xl font-semibold text-center mb-8">Gestione Eventi</h1>
 
-    <!-- Bottone per la gestione delle prenotazioni -->
-    <a href="/admin/prenotazioni">
-        <button>Vedi tutte le Prenotazioni</button>
-    </a>
-    <br> <br>
+        <!-- Admin Management Links -->
+        <div class="text-center space-y-4 mb-8">
+            <a href="/admin/sedi"
+                class="btn btn-primary inline-block py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none">Gestisci
+                Sedi</a>
+            <a href="/admin/artisti"
+                class="btn btn-primary inline-block py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none">Gestisci
+                Artisti</a>
+            <a href="/admin/prenotazioni"
+                class="btn btn-primary inline-block py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 focus:outline-none">Vedi
+                tutte le Prenotazioni</a>
+            <a href="/admin/recensioni"
+                class="btn btn-primary inline-block py-2 px-4 bg-purple-500 text-white rounded-lg hover:bg-purple-600 focus:outline-none">Vedi
+                tutte le recensioni</a>
+        </div>
 
-    <!-- Bottone per la gestione delle recensioni -->
-    <a href="/admin/recensioni">
-        <button>Vedi tutte le recensioni</button>
-    </a>
+        <h2 class="text-2xl font-semibold mb-4">Lista Eventi</h2>
+        <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Titolo</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Descrizione</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Data e Ora</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Prezzo</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Sede</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Artisti</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Elimina</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through each event (evento) and display its details -->
+                <tr th:each="evento : ${eventi}">
+                    <td class="px-6 py-4 text-sm text-gray-800" th:text="${evento.titolo}"></td>
+                    <td class="px-6 py-4 text-sm text-gray-800" th:text="${evento.descrizione}"></td>
+                    <td class="px-6 py-4 text-sm text-gray-800" th:text="${evento.dataOra}"></td>
+                    <td class="px-6 py-4 text-sm text-gray-800" th:text="${evento.prezzo}"></td>
+                    <td class="px-6 py-4 text-sm text-gray-800" th:text="${evento.sede.nome}"></td>
+                    <td class="px-6 py-4 text-sm text-gray-800">
+                        <p th:each="artista : ${evento.artisti}" th:text="${artista.nome}"></p>
+                    </td>
+                    <!-- Delete button with confirmation -->
+                    <td class="px-6 py-4">
+                        <form th:action="@{/admin/eventi/elimina/{id}(id=${evento.id})}" method="post"
+                            onsubmit="confirmDelete(event)">
+                            <button type="submit"
+                                class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 focus:outline-none">Elimina</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-    <h2>Lista Eventi</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Titolo</th>
-                <th>Descrizione</th>
-                <th>Data e Ora</th>
-                <th>Prezzo</th>
-                <th>Sede</th>
-                <th>Elimina</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Loop through each event (evento) and display its details -->
-            <tr th:each="evento : ${eventi}">
-                <!-- Display event details -->
-                <td th:text="${evento.titolo}"></td>
-                <td th:text="${evento.descrizione}"></td>
-                <td th:text="${evento.dataOra}"></td>
-                <td th:text="${evento.prezzo}"></td>
-                <td th:text="${evento.sede.nome}"></td>
+        <div class="text-center mt-8">
+            <!-- Button to add a new event -->
+            <a href="/admin/eventi/nuovo"
+                class="inline-block py-2 px-4 bg-teal-500 text-white rounded-lg hover:bg-teal-600 focus:outline-none">Aggiungi
+                Nuovo Evento</a>
+        </div>
 
-                <!-- Delete button with confirmation -->
-                <td>
-                    <form th:action="@{/admin/eventi/elimina/{id}(id=${evento.id})}" method="post" onsubmit="confirmDelete(event)">
-                        <button type="submit">Elimina</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <br> <br>
+        <div class="text-center mt-8">
+            <!-- Logout button -->
+            <a href="/auth/logout"
+                class="inline-block py-2 px-4 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none">Logout</a>
+        </div>
 
-    <!-- Bottone per aggiungere un nuovo evento -->
-    <a href="/admin/eventi/nuovo">
-        <button>Aggiungi Nuovo Evento</button>
-    </a>
-    <br> <br>
-
-    <button><a th:href="@{/auth/logout}">Logout</a></button> <br>
+    </div>
 
 </body>
 

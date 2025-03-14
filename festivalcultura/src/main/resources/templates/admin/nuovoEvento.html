@@ -4,41 +4,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Aggiungi Nuovo Evento</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <h1>Aggiungi Nuovo Evento</h1>
+<body class="bg-gray-100 text-gray-800">
 
-    <form th:action="@{/admin/eventi}" th:object="${evento}" method="post">
-        <label for="titolo">Titolo:</label>
-        <input type="text" id="titolo" th:field="*{titolo}" required><br>
+    <div class="container mx-auto p-8">
 
-        <label for="descrizione">Descrizione:</label>
-        <textarea id="descrizione" th:field="*{descrizione}" required></textarea><br>
+        <h1 class="text-3xl font-semibold text-center mb-8">Aggiungi Nuovo Evento</h1>
 
-        <label for="dataOra">Data e Ora:</label>
-        <input type="datetime-local" id="dataOra" th:field="*{dataOra}" required><br>
+        <!-- Form to add new event -->
+        <form th:action="@{/admin/eventi}" th:object="${evento}" method="post" class="bg-white p-6 rounded-lg shadow-md space-y-6">
 
-        <label for="prezzo">Prezzo:</label>
-        <input type="number" id="prezzo" th:field="*{prezzo}" required><br>
+            <div>
+                <label for="titolo" class="block text-gray-700">Titolo:</label>
+                <input type="text" id="titolo" th:field="*{titolo}" required class="w-full p-2 border border-gray-300 rounded-lg">
+            </div>
 
-        <!-- Dropdown per selezionare la sede -->
-        <label for="sede">Sede:</label>
-        <select id="sede" name="sedeId" required>
-            <option th:each="sede : ${sedi}" th:value="${sede.id}" th:text="${sede.nome}"></option>
-        </select><br>
+            <div>
+                <label for="descrizione" class="block text-gray-700">Descrizione:</label>
+                <textarea id="descrizione" th:field="*{descrizione}" required class="w-full p-2 border border-gray-300 rounded-lg" rows="4"></textarea>
+            </div>
 
-        <!-- Selezione multipla per gli artisti -->
-        <label for="artisti">Artisti:</label>
-        <select id="artisti" name="artistiIds" multiple required>
-            <option th:each="artista : ${artisti}" th:value="${artista.id}" th:text="${artista.nome}"></option>
-        </select><br>
+            <div>
+                <label for="dataOra" class="block text-gray-700">Data e Ora:</label>
+                <input type="datetime-local" id="dataOra" th:field="*{dataOra}" required class="w-full p-2 border border-gray-300 rounded-lg">
+            </div>
 
+            <div>
+                <label for="prezzo" class="block text-gray-700">Prezzo:</label>
+                <input type="number" id="prezzo" th:field="*{prezzo}" required class="w-full p-2 border border-gray-300 rounded-lg">
+            </div>
 
-        <button type="submit">Salva Evento</button>
-    </form>
+            <!-- Dropdown to select the venue -->
+            <div>
+                <label for="sede" class="block text-gray-700">Sede:</label>
+                <select id="sede" name="sedeId" required class="w-full p-2 border border-gray-300 rounded-lg">
+                    <option th:each="sede : ${sedi}" th:value="${sede.id}" th:text="${sede.nome}"></option>
+                </select>
+            </div>
 
-    <a href="/admin/eventi">Torna alla lista eventi</a>
+            <!-- Multi-select for artists -->
+            <div>
+                <label for="artisti" class="block text-gray-700">Artisti:</label>
+                <select id="artisti" name="artistiIds" multiple required class="w-full p-2 border border-gray-300 rounded-lg">
+                    <option th:each="artista : ${artisti}" th:value="${artista.id}" th:text="${artista.nome}"></option>
+                </select>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="bg-teal-500 text-white py-2 px-6 rounded-lg hover:bg-teal-600 focus:outline-none">
+                    Salva Evento
+                </button>
+            </div>
+
+        </form>
+
+        <!-- Back to events list -->
+        <div class="text-center mt-6">
+            <a href="/admin/eventi" class="text-blue-500 hover:text-blue-700">Torna alla lista eventi</a>
+        </div>
+
+    </div>
+
 </body>
 
 </html>

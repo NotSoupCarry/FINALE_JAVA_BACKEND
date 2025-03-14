@@ -4,31 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Le tue Prenotazioni</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <div style="text-align: center;">
-        <h1>Le tue Prenotazioni</h1>
+<body class="bg-gray-100">
 
-        <div th:if="${#lists.isEmpty(prenotazioni)}">
+    <div class="container mx-auto px-4 py-8">
+
+        <h1 class="text-3xl font-semibold text-center text-gray-800 mb-6">Le tue Prenotazioni</h1>
+
+        <!-- If there are no bookings -->
+        <div th:if="${#lists.isEmpty(prenotazioni)}" class="text-center text-gray-600">
             <p>Non hai ancora effettuato prenotazioni.</p>
         </div>
 
+        <!-- If there are bookings, show them -->
         <div th:if="${not #lists.isEmpty(prenotazioni)}">
-            <div th:each="prenotazione : ${prenotazioni}">
-                <h3 th:text="'Evento: ' + ${prenotazione.evento.titolo}"></h3>
-                <p th:text="'Data Prenotazione: ' + ${prenotazione.dataPrenotazione}"></p>
-                <p th:text="'Numero di Biglietti: ' + ${prenotazione.numeroBiglietti}"></p>
-                <p th:text="'Sede: ' + ${prenotazione.evento.sede.nome}"></p>
+            <div th:each="prenotazione : ${prenotazioni}" class="bg-white shadow-lg rounded-lg p-6 mb-6">
 
-                <!-- Bottone per lasciare una recensione (solo per gli eventi prenotati) -->
-                <form th:action="@{/recensioni/aggiungi/{eventoId}(eventoId=${prenotazione.evento.id})}" method="get">
-                    <button type="submit">Lascia una recensione</button>
+                <!-- Booking Details -->
+                <h3 class="text-2xl font-semibold text-gray-800" th:text="'Evento: ' + ${prenotazione.evento.titolo}"></h3>
+                <p class="text-gray-600 mt-2" th:text="'Data Prenotazione: ' + ${prenotazione.dataPrenotazione}"></p>
+                <p class="mt-2 text-gray-600" th:text="'Numero di Biglietti: ' + ${prenotazione.numeroBiglietti}"></p>
+                <p class="mt-2 text-gray-600" th:text="'Sede: ' + ${prenotazione.evento.sede.nome}"></p>
+
+                <!-- Button to leave a review (only for booked events) -->
+                <form th:action="@{/recensioni/aggiungi/{eventoId}(eventoId=${prenotazione.evento.id})}" method="get" class="mt-4">
+                    <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+                        Lascia una recensione
+                    </button>
                 </form>
+
             </div>
         </div>
 
     </div>
+
 </body>
 
 </html>
