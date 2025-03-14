@@ -10,7 +10,7 @@ import java.util.List;
 import com.example.festivalcultura.enums.Ruolo;
 
 @Entity
-@Table(name = "users")
+@Table(name = "utenti")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
