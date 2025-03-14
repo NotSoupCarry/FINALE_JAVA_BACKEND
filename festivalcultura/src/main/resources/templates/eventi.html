@@ -16,18 +16,19 @@
         <div class="text-center">
             <!-- If the user is authenticated, show logout and other options -->
             <div sec:authorize="isAuthenticated()">
+                <h2 class="font-medium">Benvenuto, <span class="text-green-600" th:text="${#authentication.name}"></span></h2>
+                <br>
                 <button class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 mb-4">
                     <a th:href="@{/auth/logout}">Logout</a>
                 </button>
                 <br> <br>
-                <br> <br>
                 <a href="/prenotazioni" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Le tue
                     prenotazioni</a>
-                <br> <br>
                 <br> <br>
                 <a href="/recensioni" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Le tue
                     recensioni</a>
                 <br> <br>
+
             </div>
 
             <!-- If the user is not authenticated, show login link -->
