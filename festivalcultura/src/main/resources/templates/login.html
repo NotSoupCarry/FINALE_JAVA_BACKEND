@@ -12,7 +12,7 @@
         <!-- Il form invia i dati a /login (gestito da Spring Security) -->
         <form th:action="@{/auth/login}" method="post">
             <label>email:</label>
-            <input type="text" name="email" required />
+            <input type="text" name="username" required />
             <br />
             <label>Password:</label>
             <input type="password" name="password" required />
