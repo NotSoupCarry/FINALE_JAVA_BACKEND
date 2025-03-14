@@ -4,25 +4,48 @@
 <head>
     <title>Login</title>
     <meta charset="UTF-8">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <div style="text-align: center;">
-        <h1>Login</h1>
-        <!-- Il form invia i dati a /login (gestito da Spring Security) -->
-        <form th:action="@{/auth/login}" method="post">
-            <label>email:</label>
-            <input type="text" name="username" required />
-            <br />
-            <label>Password:</label>
-            <input type="password" name="password" required />
-            <br />
-            <button type="submit">Accedi</button>
-        </form>
-        <p>Non hai un account? <a th:href="@{/auth/register}">Registrati</a></p>
-        <br><br>
-        <p>Vai alla home <a th:href="@{/eventi}">Home</a></p>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full">
+        <h1 class="text-3xl font-semibold text-center text-gray-800 mb-6">Login</h1>
 
+        <!-- Login Form -->
+        <form th:action="@{/auth/login}" method="post" class="space-y-6">
+            <!-- Username -->
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="text" name="username" id="username" required 
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" name="password" id="password" required 
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+                <button type="submit" 
+                    class="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Accedi
+                </button>
+            </div>
+        </form>
+
+        <!-- Registration Link -->
+        <p class="text-center text-sm mt-4 text-gray-600">Non hai un account? 
+            <a th:href="@{/auth/register}" class="text-blue-600 hover:text-blue-800">Registrati</a>
+        </p>
+
+        <!-- Home Link -->
+        <p class="text-center text-sm mt-4 text-gray-600">Vai alla home
+            <a th:href="@{/eventi}" class="text-blue-600 hover:text-blue-800">Home</a>
+        </p>
     </div>
 </body>
 

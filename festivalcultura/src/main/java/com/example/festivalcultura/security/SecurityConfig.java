@@ -59,33 +59,44 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Disabilitiamo il CSRF per semplificare (in produzione valutare attentamente
-                // questa scelta)
+                // Disable CSRF for simplicity (consider enabling it in production)
                 .csrf(csrf -> csrf.disable())
-                // Configuriamo le autorizzazioni: le pagine di registrazione e login sono
-                // accessibili a tutti
+
+                // Configure access control
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/css/**", "/js/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // Accesso solo per admin
-                        .requestMatchers("/eventi", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/auth/**", "/css/**", "/js/**").permitAll() 
+                        .requestMatchers("/eventi").permitAll() 
+                        .requestMatchers("/admin/**").hasRole("ADMIN") 
                         .anyRequest().authenticated())
-                // Configuriamo il form di login
+
+                // Configure the login form
                 .formLogin(form -> form
-                        .loginPage("/eventi") // index della paggina 
-                        .loginProcessingUrl("/auth/login") // URL a cui il form invia i dati                       
+                        .loginPage("/eventi") // The login page is the /eventi page
+                        .loginProcessingUrl("/auth/login") // URL to process login form submission
                         .successHandler((request, response, authentication) -> {
-                            // Dopo il login con successo, reindirizza alla pagina /utenti
-                            response.sendRedirect("/eventi");
+                            // Redirect based on the role of the authenticated user
+                            String targetUrl;
+                            if (authentication.getAuthorities().stream()
+                                    .anyMatch(
+                                            grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+                                targetUrl = "/admin/eventi"; // Redirect to /admin/eventi for ADMIN
+                            } else {
+                                targetUrl = "/eventi"; // Redirect to /eventi for regular users (ROLE_USER)
+                            }
+                            response.sendRedirect(targetUrl);
                         })
-                        .permitAll())
-                // Configuriamo il logout
+                        .permitAll()) // Allow everyone to access the login form
+
+                // Configure logout functionality
                 .logout(logout -> logout
-                        .logoutUrl("/auth/logout")
-                        .logoutSuccessUrl("/eventi?logout")
-                        .permitAll())
-                // Configuriamo il provider di autenticazione
+                        .logoutUrl("/auth/logout") // URL to trigger logout
+                        .logoutSuccessUrl("/eventi?logout") // Redirect to /eventi after successful logout
+                        .permitAll()) // Allow everyone to access the logout URL
+
+                // Configure authentication provider
                 .authenticationProvider(authenticationProvider());
 
         return http.build();
     }
+
 }

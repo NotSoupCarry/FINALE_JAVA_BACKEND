@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.festivalcultura.models.Artista;
 import com.example.festivalcultura.repositoryes.ArtistaRepository;
+import com.example.festivalcultura.repositoryes.EventoRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ArtistaService {
     private final ArtistaRepository artistaRepository;
+    private final EventoRepository eventoRepository;
 
     public List<Artista> getAllArtisti(){
         return artistaRepository.findAll();
@@ -29,7 +31,10 @@ public class ArtistaService {
     }
 
     @Transactional
-    public String  eliminaArtistaById(Long idArtista){     
+    public String  eliminaArtistaById(Long idArtista){   
+        if (eventoRepository.existsByArtistiId(idArtista)) {
+            return "IMPOSSIBILE ELIMINARE QUESTO ARTISTA. ELIMINARE PRIMA TUTTI GLI EVENTI ASSOCIATI";
+        }  
         artistaRepository.deleteById(idArtista);
         return null;  // La sede è stata eliminata con successo
     }
