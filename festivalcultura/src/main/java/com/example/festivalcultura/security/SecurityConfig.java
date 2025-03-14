@@ -67,20 +67,21 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**", "/css/**", "/js/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN") // Accesso solo per admin
+                        .requestMatchers("/eventi", "/css/**", "/js/**").permitAll()
                         .anyRequest().authenticated())
                 // Configuriamo il form di login
                 .formLogin(form -> form
-                        .loginPage("/auth/login") // Pagina personalizzata di login
-                        .loginProcessingUrl("/auth/login") // URL a cui il form invia i dati
+                        .loginPage("/eventi") // index della paggina 
+                        .loginProcessingUrl("/auth/login") // URL a cui il form invia i dati                       
                         .successHandler((request, response, authentication) -> {
                             // Dopo il login con successo, reindirizza alla pagina /utenti
-                            response.sendRedirect("/auth/register");
+                            response.sendRedirect("/eventi");
                         })
                         .permitAll())
                 // Configuriamo il logout
                 .logout(logout -> logout
                         .logoutUrl("/auth/logout")
-                        .logoutSuccessUrl("/auth/login?logout")
+                        .logoutSuccessUrl("/eventi?logout")
                         .permitAll())
                 // Configuriamo il provider di autenticazione
                 .authenticationProvider(authenticationProvider());

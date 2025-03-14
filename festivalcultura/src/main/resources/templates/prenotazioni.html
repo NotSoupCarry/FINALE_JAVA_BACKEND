@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Le tue Prenotazioni</title>
+</head>
+
+<body>
+    <div style="text-align: center;">
+        <h1>Le tue Prenotazioni</h1>
+
+        <div th:if="${#lists.isEmpty(prenotazioni)}">
+            <p>Non hai ancora effettuato prenotazioni.</p>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(prenotazioni)}">
+            <div th:each="prenotazione : ${prenotazioni}">
+                <h3 th:text="'Evento: ' + ${prenotazione.evento.titolo}"></h3>
+                <p th:text="'Data Prenotazione: ' + ${prenotazione.dataPrenotazione}"></p>
+                <p th:text="'Numero di Biglietti: ' + ${prenotazione.numeroBiglietti}"></p>
+                <p th:text="'Sede: ' + ${prenotazione.evento.sede.nome}"></p>
+
+                <!-- Bottone per lasciare una recensione (solo per gli eventi prenotati) -->
+                <form th:action="@{/recensioni/aggiungi/{eventoId}(eventoId=${prenotazione.evento.id})}" method="get">
+                    <button type="submit">Lascia una recensione</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Eventi</title>
+</head>
+
+<body>
+    <div style="text-align: center;">
+        <!-- Se l'utente è autenticato, mostra i seguenti link -->
+        <div sec:authorize="isAuthenticated()">
+            <button><a th:href="@{/auth/logout}">Logout</a></button> <br>
+            <a href="/prenotazioni" class="btn btn-primary">Le tue prenotazioni</a> <br>
+            <a href="/recensioni" class="btn btn-primary">Le tue recensioni</a>
+
+        </div>
+
+        <!-- Se l'utente NON è autenticato, mostra il link di login -->
+        <div sec:authorize="!isAuthenticated()">
+            <p>Effettua il login per gestire le tue prenotazioni</p>
+            <button><a th:href="@{/auth/login}">Login</a></button>
+        </div>
+
+        <br>
+        <h1>Tutti gli eventi</h1>
+
+        <div th:if="${#lists.isEmpty(eventi)}">
+            <p>Nessun evento disponibile al momento.</p>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(eventi)}">
+            <div th:each="evento : ${eventi}">
+                <h3 th:text="${evento.titolo}"></h3>
+                <p th:text="${evento.descrizione}"></p>
+                <p th:text="'Data e ora: ' + ${evento.dataOra}"></p>
+                <p th:text="'Prezzo: ' + ${evento.prezzo}"></p>
+                <p th:text="'Sede: ' + ${evento.sede.nome}"></p>
+
+                <h3>Artisti</h3>
+                <div th:each="artista : ${evento.artisti}">
+                    <p th:text="${artista.nome}"></p>
+                    <p th:text="'Genere: ' + ${artista.genere}"></p>
+                </div>
+                <!-- Bottone Prenota visibile solo se l'utente è loggato -->
+                <div sec:authorize="isAuthenticated()">
+                    <form th:action="@{/prenotazioni/{eventoId}(eventoId=${evento.id})}" method="post">
+                        <label for="numeroBiglietti">Numero Biglietti:</label>
+                        <input type="number" name="numeroBiglietti" id="numeroBiglietti" min="1" required>
+                        <button type="submit">Prenota</button>
+                    </form>
+                </div>
+                <div th:if="${param.prenotazioneSuccesso}" style="color: green; font-weight: bold;">
+                    <p>La prenotazione è stata effettuata con successo!</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

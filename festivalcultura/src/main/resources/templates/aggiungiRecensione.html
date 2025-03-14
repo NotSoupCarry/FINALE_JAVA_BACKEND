@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lascia una recensione</title>
+</head>
+
+<body>
+    <h1>Lascia una recensione per l'evento: <span th:text="${evento.titolo}"></span></h1>
+
+    <form th:action="@{/recensioni/aggiungi/{eventoId}(eventoId=${evento.id})}" method="post">
+        <label for="valutazione">Valutazione:</label>
+        <input type="number" name="valutazione" min="1" max="5" required>
+
+        <label for="commento">Commento:</label>
+        <textarea name="commento" rows="4" required></textarea>
+
+        <button type="submit">Invia recensione</button>
+    </form>
+</body>
+
+</html>

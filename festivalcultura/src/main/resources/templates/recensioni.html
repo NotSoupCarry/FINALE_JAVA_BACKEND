@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Le tue Recensioni</title>
+</head>
+<body>
+    <div style="text-align: center;">
+        <h1>Le tue Recensioni</h1>
+
+        <div th:if="${#lists.isEmpty(recensioni)}">
+            <p>Non hai ancora lasciato recensioni.</p>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(recensioni)}">
+            <div th:each="recensione : ${recensioni}">
+                <h3 th:text="'Evento: ' + ${recensione.evento.titolo}"></h3>
+                <p th:text="'Valutazione: ' + ${recensione.valutazione}"></p>
+                <p th:text="'Commento: ' + ${recensione.commento}"></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
