@@ -17,6 +17,9 @@ public class RecensioneService {
 
     private final RecensioneRepository recensioneRepository;
 
+    public List<Recensione> getAll(){
+        return recensioneRepository.findAll();
+    }
     // Metodo per salvare la recensione
     @Transactional
     public void salvaRecensione(Recensione recensione) {

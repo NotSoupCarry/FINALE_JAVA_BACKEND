@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestione Sedi</title>
+</head>
+
+<body>
+    <h1>Gestione Sedi</h1>
+
+
+
+    <!-- Tabella con tutte le sedi -->
+    <h2>Lista Sedi</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome Sede</th>
+                <th>Indirizzo</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="sede : ${sedi}">
+                <td th:text="${sede.nome}"></td>
+                <td th:text="${sede.indirizzo}"></td>
+                <td>
+                    <!-- Bottone per eliminare una sede -->
+                    <form th:action="@{/admin/sedi/elimina/{id}(id=${sede.id})}" method="post">
+                        <button type="submit">Elimina</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Aggiungi Nuova Sede</h3>
+    <form th:action="@{/admin/sedi}" method="post">
+        <label for="nome">Nome Sede:</label>
+        <input type="text" id="nome" name="nome" required><br><br>
+
+        <label for="indirizzo">Indirizzo:</label>
+        <input type="text" id="indirizzo" name="indirizzo" required><br><br>
+
+        <button type="submit">Aggiungi Sede</button>
+    </form>
+    <!-- Bottone per tornare alla lista eventi o ad altre sezioni -->
+    <a href="/admin/eventi">
+        <button>Torna alla Lista Eventi</button>
+    </a>
+</body>
+
+</html>

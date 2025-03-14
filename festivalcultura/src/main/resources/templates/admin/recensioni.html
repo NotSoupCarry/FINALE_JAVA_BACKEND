@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestione Recensioni</title>
+</head>
+<body>
+    <h1>Gestione Recensioni</h1>
+
+    <!-- Messaggio di errore (se presente) -->
+    <div th:if="${errore != ''}">
+        <p style="color: red;" th:text="${errore}"></p>
+    </div>
+
+    <h2>Lista Recensioni</h2>
+
+    <!-- Tabella con tutte le recensioni -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Valutazione</th>
+                <th>Commento</th>
+                <th>Utente</th>
+                <th>Evento</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="recensione : ${recensioni}">
+                <td th:text="${recensione.id}"></td>
+                <td th:text="${recensione.valutazione}"></td>
+                <td th:text="${recensione.commento}"></td>
+                <td th:text="${recensione.utente.nome}"></td>
+                <td th:text="${recensione.evento.titolo}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <!-- Bottone per tornare alla lista eventi o ad altre sezioni -->
+    <a href="/admin/eventi">
+        <button>Torna alla Lista Eventi</button>
+    </a>
+
+</body>
+</html>

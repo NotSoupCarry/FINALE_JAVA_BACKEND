@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestione Eventi</title>
+</head>
+
+<body>
+    <h1>Gestione Eventi</h1>
+
+    <!-- Bottone per aggiungere un nuovo evento -->
+    <a href="/admin/eventi/nuovo">
+        <button>Aggiungi Nuovo Evento</button>
+    </a>
+    <br> <br>
+
+
+    <!-- Bottone per la gestione delle sedi -->
+    <a href="/admin/sedi">
+        <button>Gestisci Sedi</button>
+    </a>
+    <br> <br>
+
+    <!-- Bottone per la gestione degli artisti -->
+    <a href="/admin/artisti">
+        <button>Gestisci Artisti</button>
+    </a>
+    <br> <br>
+
+    <!-- Bottone per la gestione degli artisti -->
+    <a href="/admin/prenotazioni">
+        <button>Vedi tutte le Prenotazioni</button>
+    </a>
+    <br> <br>
+
+    <!-- Bottone per la gestione degli artisti -->
+    <a href="/admin/recensioni">
+        <button>Gestisci le recensioni</button>
+    </a>
+
+    <h2>Lista Eventi</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Titolo</th>
+                <th>Descrizione</th>
+                <th>Data e Ora</th>
+                <th>Prezzo</th>
+                <th>Sede</th>
+                <th>Elimina</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through each event (evento) and display its details -->
+            <tr th:each="evento : ${eventi}">
+                <!-- Display event details -->
+                <td th:text="${evento.titolo}"></td>
+                <td th:text="${evento.descrizione}"></td>
+                <td th:text="${evento.dataOra}"></td>
+                <td th:text="${evento.prezzo}"></td>
+                <td th:text="${evento.sede.nome}"></td>
+
+                <!-- Delete button -->
+                <td>
+                    <form th:action="@{/admin/eventi/elimina/{id}(id=${evento.id})}" method="post">
+                        <button type="submit">Elimina</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button><a th:href="@{/auth/logout}">Logout</a></button> <br>
+
+</body>
+
+</html>

@@ -31,11 +31,12 @@ public class Evento {
     @JoinColumn(name = "sede_id")
     private Sede sede;  // Relazione Many-to-One con Sede
 
-    @OneToMany(mappedBy = "evento")
-    private List<Prenotazione> prenotazioni;
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Prenotazione> prenotazioni;  // Relazione One-to-Many con Prenotazione
 
-    @OneToMany(mappedBy = "evento")
-    private List<Recensione> recensioni;
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Recensione> recensioni;  // Relazione One-to-Many con Recensione
+
     @ManyToMany
     @JoinTable(
         name = "evento_artista", 

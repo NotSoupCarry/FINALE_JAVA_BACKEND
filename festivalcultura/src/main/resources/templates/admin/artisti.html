@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestione Artisti</title>
+</head>
+
+<body>
+    <h1>Gestione Artisti</h1>
+
+    <!-- Mostra un messaggio di errore se presente -->
+    <div th:if="${errore}">
+        <p style="color: red;" th:text="${errore}"></p>
+    </div>
+
+    <!-- Tabella con tutti gli artisti -->
+    <h2>Lista Artisti</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome Artista</th>
+                <th>Genere</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="artista : ${artisti}">
+                <td th:text="${artista.nome}"></td>
+                <td th:text="${artista.genere}"></td>
+                <td>
+                    <!-- Bottone per eliminare un artista -->
+                    <form th:action="@{/admin/artisti/elimina/{id}(id=${artista.id})}" method="post">
+                        <button type="submit">Elimina</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Aggiungi Nuovo Artista</h3>
+    <form th:action="@{/admin/artisti}" method="post">
+        <label for="nome">Nome Artista:</label>
+        <input type="text" id="nome" name="nome" required><br><br>
+
+        <label for="genere">Genere:</label>
+        <input type="text" id="genere" name="genere" required><br><br>
+
+        <button type="submit">Aggiungi Artista</button>
+    </form>
+
+    <!-- Bottone per tornare alla lista eventi o ad altre sezioni -->
+    <a href="/admin/eventi">
+        <button>Torna alla Lista Eventi</button>
+    </a>
+</body>
+
+</html>

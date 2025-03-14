@@ -23,6 +23,9 @@ public class PrenotazioneService {
     private final UtenteRepository utenteRepository;
     private final EventoRepository eventoRepository;
 
+    public List<Prenotazione> getAll(){
+        return prenotazioneRepository.findAll();
+    }
     @Transactional
     public Prenotazione prenotaEvento(Long eventoId, Long utenteId, int numeroBiglietti) {
         // Recupera l'utente e l'evento dal database
