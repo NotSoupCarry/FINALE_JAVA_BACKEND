@@ -4,17 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestione Eventi</title>
+
+    <!-- Add JavaScript for confirmation alert -->
+    <script type="text/javascript">
+        function confirmDelete(event) {
+            const confirmed = confirm("Sei sicuro di voler eliminare questo evento?\n Tutte le prenotazioni e Recensioni relative verranno eliminate");
+            if (!confirmed) {
+                event.preventDefault(); // Prevent form submission if user cancels
+            }
+        }
+    </script>
 </head>
 
 <body>
-    <h1>Gestione Eventi</h1>
-
-    <!-- Bottone per aggiungere un nuovo evento -->
-    <a href="/admin/eventi/nuovo">
-        <button>Aggiungi Nuovo Evento</button>
-    </a>
-    <br> <br>
-
+    <h1>Gestione Eventi</h1>  
 
     <!-- Bottone per la gestione delle sedi -->
     <a href="/admin/sedi">
@@ -28,13 +31,13 @@
     </a>
     <br> <br>
 
-    <!-- Bottone per la gestione degli artisti -->
+    <!-- Bottone per la gestione delle prenotazioni -->
     <a href="/admin/prenotazioni">
         <button>Vedi tutte le Prenotazioni</button>
     </a>
     <br> <br>
 
-    <!-- Bottone per la gestione degli artisti -->
+    <!-- Bottone per la gestione delle recensioni -->
     <a href="/admin/recensioni">
         <button>Gestisci le recensioni</button>
     </a>
@@ -61,15 +64,22 @@
                 <td th:text="${evento.prezzo}"></td>
                 <td th:text="${evento.sede.nome}"></td>
 
-                <!-- Delete button -->
+                <!-- Delete button with confirmation -->
                 <td>
-                    <form th:action="@{/admin/eventi/elimina/{id}(id=${evento.id})}" method="post">
+                    <form th:action="@{/admin/eventi/elimina/{id}(id=${evento.id})}" method="post" onsubmit="confirmDelete(event)">
                         <button type="submit">Elimina</button>
                     </form>
                 </td>
             </tr>
         </tbody>
     </table>
+    <br> <br>
+
+    <!-- Bottone per aggiungere un nuovo evento -->
+    <a href="/admin/eventi/nuovo">
+        <button>Aggiungi Nuovo Evento</button>
+    </a>
+    <br> <br>
 
     <button><a th:href="@{/auth/logout}">Logout</a></button> <br>
 
